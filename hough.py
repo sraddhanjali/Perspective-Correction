@@ -25,7 +25,7 @@ class Coordinates(object):
         approx = cv2.approxPolyDP(Coordinates.coord, 0.02*peri, True)
         Coordinates.size = 4
         print approx
-        if len(approx) % 4 != 0:
+        if len(approx) != 4:
             print "yes a quad"
             Coordinates.coord = approx.tolist()
             return True
