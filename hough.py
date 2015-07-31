@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 
-
 #coordinates of the number of intersections obtained
 class Coordinates(object):
     coord = []
@@ -11,10 +10,18 @@ class Coordinates(object):
         Coordinates.size += 1
         Coordinates.centroidx = 0
         Coordinates.centroidy = 0
+        Coordinates.sumx = 0
+        Coordinates.sumy = 0
         Coordinates.corners = []
-    
+        Coordinates.quad = 4
+
+    def centroidxy(self, x, y):
+        Coordinates.sumx += x
+        Coordinates.sumy += y        
+         
 #     append the coordinates of intersections
     def append(self, x, y):
+        self.centroidxy(x, y)
         Coordinates.coord.append([x, y])
         Coordinates.size += 1
     
@@ -22,10 +29,9 @@ class Coordinates(object):
     def quadcheck(self):
         Coordinates.coord = np.reshape(Coordinates.coord, (Coordinates.size, 1, 2))
         peri = cv2.arcLength(Coordinates.coord, True)
-        approx = cv2.approxPolyDP(Coordinates.coord, 0.02*peri, True)
-        Coordinates.size = 4
-        print approx
-        if len(approx) != 4:
+        approx = cv2.approxPolyDP(Coordinates.coord, 0.1*peri, True)
+        print approx, "approx", len(approx)
+        if len(approx) == Coordinates.quad:
             print "yes a quad"
             Coordinates.coord = approx.tolist()
             return True
@@ -36,13 +42,8 @@ class Coordinates(object):
         
 #     find the centroid of the points of intersections found
     def calculateCentroid(self): 
-        sumx = 0
-        sumy = 0
-        for i in xrange(0, Coordinates.size):
-            sumx += Coordinates.coord[i][0][0]
-            sumy += Coordinates.coord[i][0][1]
-        Coordinates.centroidx = sumx/Coordinates.size
-        Coordinates.centroidy = sumy/Coordinates.size
+        Coordinates.centroidx = Coordinates.sumx/Coordinates.size
+        Coordinates.centroidy = Coordinates.sumy/Coordinates.size
         print "centroids", Coordinates.centroidx, Coordinates.centroidy
 
 #     find the intersection points of all the hull structures found            
@@ -67,11 +68,12 @@ class Coordinates(object):
     def calculateTRTLBRBL(self):
         topoints = []
         bottompoints = []
-        for i in xrange(0, Coordinates.size):
-            if Coordinates.coord[i][0][1] < Coordinates.centroidy:
-                topoints.append(Coordinates.coord[i])
+        for coord in Coordinates.coord:
+            print coord, type(coord)
+            if coord[0][1] < Coordinates.centroidy:
+                topoints.append(coord)
             else: 
-                bottompoints.append(Coordinates.coord[i])
+                bottompoints.append(coord)
         
         top_left = min(topoints)
         top_right = max(topoints)
@@ -84,7 +86,6 @@ class Coordinates(object):
         Coordinates.corners.append(bottom_left)
         return Coordinates.corners
     
-
 #     change the perspective look of an image
 class Perspective(object):
     def __init__(self, source):
