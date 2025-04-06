@@ -1,7 +1,5 @@
 # Automated Perspective Correction for Scanned Documents and Cards
 
-Status: Done
-
 ### **Overview**
 
 Modern scanning applications, such as **CamScanner** or built-in iPad scanning tools, employ **perspective correction** to automatically detect and straighten skewed documents. This process ensures that scanned images appear **parallel to the camera viewpoint** and aligned properly, eliminating distortions caused by camera angles.
