@@ -127,13 +127,12 @@ Handles:
 
 Input:
 
-![Screenshot 2025-01-30 at 5.05.05 PM.png](Images/Screenshot_2025-01-30_at_5.05.05_PM.png)
+![Screenshot 2025-01-30 at 5.05.05 PM.png](Screenshot_2025-01-30_at_5.05.05_PM.png)
 
 Output:
 
-![Screenshot 2025-01-30 at 5.09.57 PM.png](Images/Screenshot_2025-01-30_at_5.09.57_PM.png)
+![Screenshot 2025-01-30 at 5.09.57 PM.png](Screenshot_2025-01-30_at_5.09.57_PM.png)
 
-🔗 **GitHub**: [Perspective Correction Project](https://github.com/sraddhanjali/Perspective-Correction/blob/master/hough.py)
 
 ---
 
